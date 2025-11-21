@@ -1,0 +1,19 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">name</th>
+            <th scope="col">postion</th>
+            <th scope="col">nbr</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let team of teamsTab">
+            <th scope="row">{{team.id}}</th>
+            <td>{{team.name}}</td>
+            <td>{{team.owner}}</td>
+            <td>{{team.foundation}}</td>
+        </tr>
+
+    </tbody>
+</table>
