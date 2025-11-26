@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { generateId } from '../../shared/genricFunction';
 
 @Component({
   selector: 'app-add-match',
@@ -8,8 +9,12 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './add-match.component.css'
 })
 export class AddMatchComponent {
-  obj: any =  {};
+  obj: any = {};
   addMatch() {
-    console.log("Here is  match Obj", this.obj);
+    const T = JSON.parse(localStorage.getItem("matchesTab") || "[]")
+    this.obj.id = generateId(T);
+    T.push(this.obj);
+    localStorage.setItem("matchesTab", JSON.stringify(T));
+    // console.log("Here is  match Obj", this.obj);
   }
 }
