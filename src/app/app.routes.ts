@@ -7,6 +7,8 @@ import { AddTeamComponent } from './components/add-team/add-team.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { MatchesComponent } from './components/matches/matches.component';
 import { AddPlayerComponent } from './components/add-player/add-player.component';
+import { MatchInfoComponent } from './components/match-info/match-info.component';
+import { MatchEditComponent } from './components/match-edit/match-edit.component';
 
 export const routes: Routes = [
     { path: "", component: HomeComponent },
@@ -17,4 +19,6 @@ export const routes: Routes = [
     { path: "addPlayer", component: AddPlayerComponent },
     { path: "admin", component: AdminComponent },
     { path: "matches", component: MatchesComponent },
+    { path: "matchInfo/:id", component: MatchInfoComponent },
+    { path: "editMatch/:mid", component:  MatchEditComponent},
 ];
