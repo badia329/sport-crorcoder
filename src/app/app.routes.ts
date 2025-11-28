@@ -1,20 +1,22 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
-import { LoginComponent } from './components/login/login.component';
-import { SignupComponent } from './components/signup/signup.component';
-import { AddMatchComponent } from './components/add-match/add-match.component';
-import { AddTeamComponent } from './components/add-team/add-team.component';
-import { AdminComponent } from './components/admin/admin.component';
-import { MatchesComponent } from './components/matches/matches.component';
-import { AddPlayerComponent } from './components/add-player/add-player.component';
+import { LoginComponent } from './component/login/login.component';
+import { HomeComponent } from './component/home/home.component';
+import { SignupComponent } from './component/signup/signup.component';
+import { AddTeamComponent } from './component/add-team/add-team.component';
+import { AddMatchComponent } from './component/add-match/add-match.component';
+import { AdminComponent } from './component/admin/admin.component';
+
 
 export const routes: Routes = [
-    { path: "", component: HomeComponent },
-    { path: "signin", component: LoginComponent },
-    { path: "signup", component: SignupComponent },
-    { path: "addMatch", component: AddMatchComponent },
-    { path: "addTeam", component: AddTeamComponent },
-    { path: "addPlayer", component: AddPlayerComponent },
-    { path: "admin", component: AdminComponent },
-    { path: "matches", component: MatchesComponent },
+    //Routes type predfini angular
+    // [] initialisation
+    {path: "", component: HomeComponent },
+    {path: "signin", component: LoginComponent },
+    {path: "signup", component: SignupComponent },
+    {path: "addteam", component: AddTeamComponent},
+    {path: "addmatch", component: AddMatchComponent},
+    {path: "admin", component: AdminComponent},
+    
+    
+
 ];
