@@ -7,10 +7,8 @@
         </div>
         <div class="row no-gutters">
             <div class="col-md-4" *ngFor="let elt of newsTab">
-                <app-info></app-info>
+                <app-info [obj]="elt"></app-info>
             </div>
-
-
         </div>
 
     </div>
