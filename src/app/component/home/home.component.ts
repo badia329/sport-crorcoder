@@ -13,5 +13,5 @@ import { BlogComponent } from '../blog/blog.component';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-
+  match: any = {scoreOne: 1, scoreTwo: 2, teamOne: "ezr", teamTwo: "tei"}
 }

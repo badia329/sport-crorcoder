@@ -1,1 +1,19 @@
-<p>teams-table works!</p>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">name</th>
+      <th scope="col">owner</th>
+      <th scope="col">foundation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let match of matchesTab">
+      <th scope="row">1</th>
+      <td>{{match.scoreOne}}</td>
+      <td>{{match.scoreTwo}}</td>
+      <td>{{match.teamOne}}</td>
+      <td>{{match.scoreOne}}</td>
+    </tr>
+  </tbody>
+</table>

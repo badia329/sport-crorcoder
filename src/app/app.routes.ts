@@ -5,6 +5,7 @@ import { SignupComponent } from './component/signup/signup.component';
 import { AddTeamComponent } from './component/add-team/add-team.component';
 import { AddMatchComponent } from './component/add-match/add-match.component';
 import { AdminComponent } from './component/admin/admin.component';
+import { AllMatchesComponent } from './component/all-matches/all-matches.component';
 
 
 export const routes: Routes = [
@@ -16,6 +17,7 @@ export const routes: Routes = [
     {path: "addteam", component: AddTeamComponent},
     {path: "addmatch", component: AddMatchComponent},
     {path: "admin", component: AdminComponent},
+    {path: "matches", component: AllMatchesComponent},
     
     
 
