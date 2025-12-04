@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { BannerComponent } from "../banner/banner.component";
 
 @Component({
   selector: 'app-signup',
-  imports: [],
+  imports: [BannerComponent],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css'
 })

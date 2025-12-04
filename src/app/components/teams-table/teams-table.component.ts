@@ -1,19 +1,31 @@
 import { NgFor } from '@angular/common';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-teams-table',
   imports: [NgFor],
   templateUrl: './teams-table.component.html',
-styleUrls: ['./teams-table.component.css']
+  styleUrls: ['./teams-table.component.css'],
 })
 export class TeamsTableComponent {
-  teamsTab: any = [
-    { id: 1, name: 'Real Madrid', owner: 'Florentino Pérez', foundation: 1902 },
-    { id: 2, name: 'Barcelona', owner: 'Joan Laporta', foundation: 1899 },
-    { id: 3, name: 'Manchester United', owner: 'Glazer Family', foundation: 1878 },
-    { id: 4, name: 'Bayern Munich', owner: 'Herbert Hainer', foundation: 1900 }
-  ]
+  teamsTab: any = [];
+  constructor(private router: Router) {}
+  ngOnInit() {
+    this.teamsTab = JSON.parse(localStorage.getItem('teams') || '[]');
+  }
+  goToEdit(teamId: any) {
+    this.router.navigate(['editTeam/' + teamId]);
+  }
+  deletePlayer(teamId: any) {
+    for (let i = 0; i < this.teamsTab.length; i++) {
+      if (this.teamsTab[i].id == teamId) {
+        this.teamsTab.splice(i, 1);
+        break;
+      }
+    }
+    localStorage.setItem("teams", JSON.stringify(this.teamsTab))
+    console.log(this.teamsTab);
+
+  }
 }
-
-

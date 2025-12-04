@@ -1,18 +1,25 @@
 <table class="table">
-    <thead>
-        <tr>
-            <th scope="col">id</th>
-            <th scope="col">name</th>
-            <th scope="col">postion</th>
-            <th scope="col">nbr</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let player of playersTab">
-            <th scope="row">{{player.id}}</th>
-            <td>{{player.name}}</td>
-            <td>{{player.position}}</td>
-            <td>{{player.nbr}}</td>
-        </tr>
-    </tbody>
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">name</th>
+      <th scope="col">postion</th>
+      <th scope="col">number</th>
+      <th scope="col">Acitons</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let player of playersTab">
+      <th scope="row">{{ player.id }}</th>
+      <td>{{ player.name }}</td>
+      <td>{{ player.position }}</td>
+      <td>{{ player.number }}</td>
+      <td>
+        <button class="btn btn-warning mr-2" (click)="goToEdit(player.id)">Edit</button>
+        <button class="btn btn-danger mr-2" (click)="deletePlayer()">
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
 </table>

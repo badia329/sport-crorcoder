@@ -14,10 +14,8 @@ export class MatchInfoComponent {
   constructor(private activatedRoute: ActivatedRoute) {
   }
   ngOnInit() {
-    // Get ID from Path
     let matchId = this.activatedRoute.snapshot.params["id"];
-    // Get matches from LS (mathcesTab : Key)
-    let matches = getFormlS("matchesTab");
+    let matches = getFormlS("matches");
     for (let i = 0; i < matches.length; i++) {
       if (matches[i].id == matchId) {
         this.foundMatch = matches[i];

@@ -1,17 +1,22 @@
-import { NgFor } from '@angular/common';
+import { NgFor} from '@angular/common';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-players-table',
   imports: [NgFor],
   templateUrl: './players-table.component.html',
-  styleUrls: ['./players-table.component.css']
+  styleUrls: ['./players-table.component.css'],
 })
 export class PlayersTableComponent {
-  playersTab = [
-    { id: 1, name: 'Lionel Messi', position: 'Forward', nbr: 10 },
-    { id: 2, name: 'Cristiano Ronaldo', position: 'Forward', nbr: 7 },
-    { id: 3, name: 'Kevin De Bruyne', position: 'Midfielder', nbr: 17 },
-    { id: 4, name: 'Virgil van Dijk', position: 'Defender', nbr: 4 }
-  ];
+  playersTab: any = [];
+  constructor(private router: Router) {}
+  ngOnInit() {
+    this.playersTab = JSON.parse(localStorage.getItem('players') || '[]');
+  }
+
+  goToEdit(playerId: any) {
+    this.router.navigate(['editPlayer/' + playerId]);
+  }
+ deletePlayer() {}
 }

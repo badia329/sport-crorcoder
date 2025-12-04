@@ -1,10 +1,10 @@
-<app-banner title="Add Team"></app-banner>
+<app-banner title="add Player"></app-banner>
 
 <div class="site-section">
   <div class="container">
     <div class="row">
       <div class="col-lg-7">
-        <form #teamForm="ngForm" (ngSubmit)="addTeam(teamForm)">
+        <form #playerForm="ngForm" (ngSubmit)="editPlayer(playerForm)">
           <!-- Name Filed-->
           <div class="form-group">
             <input
@@ -26,47 +26,62 @@
               >
             </div>
           </div>
-          <!--Owner Filed-->
+          <!--Age Filed-->
           <div class="form-group">
             <input
-              type="text"
-              [(ngModel)]="obj.owner"
+              type="number"
+              [(ngModel)]="obj.age"
               class="form-control"
-              placeholder="Owner"
-              name="owner"
+              placeholder="Age"
+              name="age"
               required
-              minlength="4"
-              #owner="ngModel"
+              min="4"
+              #age="ngModel"
             />
-            <div *ngIf="owner.invalid && owner.touched">
-              <small class="text-danger" *ngIf="owner.errors?.['required']"
-                >Owner is required</small
+            <div *ngIf="age.invalid && age.touched">
+              <small class="text-danger" *ngIf="age.errors?.['required']"
+                >Age is required</small
               >
-              <small class="text-danger" *ngIf="owner.errors?.['minlength']"
-                >Owner must ne at least 4 characters</small
+              <small class="text-danger" *ngIf="age.errors?.['min']"
+                >age must be at least 20</small
+              >
+              <small class="text-danger" *ngIf="age.errors?.['max']"
+                >age must less than 50</small
               >
             </div>
           </div>
-          <!--Foundation-->
+          <!--Position-->
           <div class="form-group">
             <input
               type="text"
-              [(ngModel)]="obj.foundation"
+              [(ngModel)]="obj.position"
               class="form-control"
-              placeholder="Foundation"
-              name="foundation"
+              placeholder="position"
+              name="position"
               required
-              minlength="4"
-              #foundation="ngModel"
+              #position="ngModel"
             />
-            <div *ngIf="foundation.invalid && foundation.touched">
-              <small class="text-danger" *ngIf="foundation.errors?.['required']"
-                >Owner is required</small
+            <div *ngIf="position.invalid && position.touched">
+              <small class="text-danger" *ngIf="position.errors?.['required']"
+                >Position is required</small
               >
-              <small
-                class="text-danger"
-                *ngIf="foundation.errors?.['minlength']"
-                >Owner must be at least 4 characters</small
+            </div>
+          </div>
+          <!--Number-->
+          <div class="form-group">
+            <input
+              type="number"
+              [(ngModel)]="obj.number"
+              class="form-control"
+              placeholder="number"
+              name="number"
+              required
+              minlength="5"
+              #number="ngModel"
+            />
+            <div *ngIf="number.invalid && number.touched">
+              <small class="text-danger" *ngIf="number.errors?.['required']"
+                >Number is required</small
               >
             </div>
           </div>
@@ -76,7 +91,7 @@
               type="submit"
               class="btn btn-primary py-3 px-5"
               value="add Player"
-              [disabled]="teamForm.invalid"
+              [disabled]="playerForm.invalid"
             />
           </div>
         </form>

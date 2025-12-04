@@ -1,54 +1,113 @@
-<div class="hero overlay" style="background-image: url('images/bg_3.jpg');">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-9 mx-auto text-center">
-                <h1 class="text-white">edit Match </h1>
-            </div>
-        </div>
-    </div>
-</div>
+<app-banner title="Edit Match"></app-banner>
 
 <div class="site-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-7">
-                <form #matchForm="ngForm" (ngSubmit)="editMatch()">
-                    <div class="form-group">
-                        <input type="text" [(ngModel)]="obj.teamOne" class="form-control" placeholder="Team One" name="teamOne">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" [(ngModel)]="obj.teamTwo" class="form-control" placeholder="Team Two" name="teamTwo">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" [(ngModel)]="obj.scoreOne" class="form-control" placeholder="Score One" name="scoreOne">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" [(ngModel)]="obj.scoreTwo" class="form-control" placeholder="Score Two" name="scoreTwo">
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" class="btn btn-primary py-3 px-5" value="Edit Match">
-                    </div>
-                </form>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-7">
+        <form #matchForm="ngForm" (ngSubmit)="editMatch(matchForm)">
+          <!-- teamOne Filed-->
+          <div class="form-group">
+            <input
+              type="text"
+              [(ngModel)]="obj.teamOne"
+              class="form-control"
+              placeholder="Team One"
+              name="teamOne"
+              required
+              minlength="3"
+              #teamOne="ngModel"
+            />
+            <div *ngIf="teamOne.invalid && teamOne.touched">
+              <small class="text-danger" *ngIf="teamOne.errors?.['required']"
+                >Name is required</small
+              >
+              <small class="text-danger" *ngIf="teamOne.errors?.['minlength']"
+                >Name must be at least 3 characters</small
+              >
             </div>
-            <div class="col-lg-4 ml-auto">
-
-                <ul class="list-unstyled"> 
-                    <li class="mb-2">
-                        <strong class="text-white d-block">Address</strong>
-                        273 South Riverview Rd. <br> New York, NY 10011
-                    </li>
-                    <li class="mb-2">
-                        <strong class="text-white d-block">Email</strong>
-                        <a href="#">info&#64;unslate.co</a>
-                    </li>
-                    <li class="mb-2">
-                        <strong class="text-white d-block">
-                            Phone
-                        </strong>
-                        <a href="#">+12 345 6789 012</a>
-                    </li>
-                </ul>
+          </div>
+          <!-- teamTwo Filed-->
+          <div class="form-group">
+            <input
+              type="text"
+              [(ngModel)]="obj.teamTwo"
+              class="form-control"
+              placeholder="Team Two"
+              name="teamTwo"
+              required
+              minlength="3"
+              #teamTwo="ngModel"
+            />
+            <div *ngIf="teamTwo.invalid && teamTwo.touched">
+              <small class="text-danger" *ngIf="teamTwo.errors?.['required']"
+                >teamOne is required</small
+              >
+              <small class="text-danger" *ngIf="teamTwo.errors?.['minlength']"
+                >teamOne must be at least 3 characters</small
+              >
             </div>
-        </div>
+          </div>
+          <!-- scoreOne Filed-->
+          <div class="form-group">
+            <input
+              type="number"
+              [(ngModel)]="obj.scoreOne"
+              class="form-control"
+              placeholder="Score One"
+              name="scoreOne"
+              required
+              #scoreOne="ngModel"
+            />
+            <div *ngIf="scoreOne.invalid && scoreOne.touched">
+              <small class="text-danger" *ngIf="scoreOne.errors?.['required']"
+                >Score One is required</small
+              >
+            </div>
+          </div>
+          <!-- scoreTwo Filed-->
+          <div class="form-group">
+            <input
+              type="number"
+              [(ngModel)]="obj.scoreTwo"
+              class="form-control"
+              placeholder="Score Two"
+              name="scoreTwo"
+              required
+              #scoreTwo="ngModel"
+            />
+            <div *ngIf="scoreTwo.invalid && scoreTwo.touched">
+              <small class="text-danger" *ngIf="scoreTwo.errors?.['required']"
+                >Score Two is required</small
+              >
+            </div>
+          </div>
+          <div class="form-group">
+            <input
+              type="submit"
+              class="btn btn-primary py-3 px-5"
+              value="Edit Match"
+              [disabled]="matchForm.invalid"
+            />
+          </div>
+        </form>
+      </div>
+      <div class="col-lg-4 ml-auto">
+        <ul class="list-unstyled">
+          <li class="mb-2">
+            <strong class="text-white d-block">Address</strong>
+            273 South Riverview Rd. <br />
+            New York, NY 10011
+          </li>
+          <li class="mb-2">
+            <strong class="text-white d-block">Email</strong>
+            <a href="#">info&#64;unslate.co</a>
+          </li>
+          <li class="mb-2">
+            <strong class="text-white d-block"> Phone </strong>
+            <a href="#">+12 345 6789 012</a>
+          </li>
+        </ul>
+      </div>
     </div>
+  </div>
 </div>

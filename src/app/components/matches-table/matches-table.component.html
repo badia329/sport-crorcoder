@@ -12,14 +12,17 @@
   <tbody>
     <tr *ngFor="let match of matchesTab">
       <th scope="row">{{ match.id }}</th>
-      <td>{{ match.teamOne }}</td>
-      <td>{{ match.teamtwo }}</td>
       <td>{{ match.scoreOne }}</td>
       <td>{{ match.scoreTwo }}</td>
-      <button class="btn btn-info mr-2" (click)="goToInfo(match.id)">info</button>
-      <button class="btn btn-warning mr-2" (click)="goToEdit(match.id)">Edit</button>
-      <button class="btn btn-danger mr-2"  (click)=" deleteMatch(match.id)">Delete</button>
+      <td>{{ match.teamOne }}</td>
+      <td>{{ match.teamTwo }}</td>
+      <td>
+        <button class="btn btn-info mr-2" (click)="goToInfo(match.id)">Info</button>
+        <button class="btn btn-warning mr-2" (click)="goToEdit(match.id)">Edit</button>
+        <button class="btn btn-danger mr-2" (click)="deleteMatch(match.id)">
+          Delete
+        </button>
+      </td>
     </tr>
-
   </tbody>
 </table>

@@ -9,16 +9,20 @@ import { MatchesComponent } from './components/matches/matches.component';
 import { AddPlayerComponent } from './components/add-player/add-player.component';
 import { MatchInfoComponent } from './components/match-info/match-info.component';
 import { MatchEditComponent } from './components/match-edit/match-edit.component';
+import { TeamEditComponent } from './components/team-edit/team-edit.component';
+import { PlayerEditComponent } from './components/player-edit/player-edit.component';
 
 export const routes: Routes = [
-    { path: "", component: HomeComponent },
-    { path: "signin", component: LoginComponent },
-    { path: "signup", component: SignupComponent },
-    { path: "addMatch", component: AddMatchComponent },
-    { path: "addTeam", component: AddTeamComponent },
-    { path: "addPlayer", component: AddPlayerComponent },
-    { path: "admin", component: AdminComponent },
-    { path: "matches", component: MatchesComponent },
-    { path: "matchInfo/:id", component: MatchInfoComponent },
-    { path: "editMatch/:mid", component:  MatchEditComponent},
+  { path: '', component: HomeComponent },
+  { path: 'signin', component: LoginComponent },
+  { path: 'signup', component: SignupComponent },
+  { path: 'addMatch', component: AddMatchComponent },
+  { path: 'addTeam', component: AddTeamComponent },
+  { path: 'addPlayer', component: AddPlayerComponent },
+  { path: 'admin', component: AdminComponent },
+  { path: 'matches', component: MatchesComponent },
+  { path: 'infoMatch/:id', component: MatchInfoComponent },
+  { path: 'editMatch/:id', component: MatchEditComponent },
+  { path: 'editTeam/:id', component: TeamEditComponent },
+  { path: 'editPlayer/:id', component: PlayerEditComponent },
 ];

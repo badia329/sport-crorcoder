@@ -1,10 +1,10 @@
-<app-banner title="Add Team"></app-banner>
+<app-banner  title="add Team"></app-banner>
 
 <div class="site-section">
   <div class="container">
     <div class="row">
       <div class="col-lg-7">
-        <form #teamForm="ngForm" (ngSubmit)="addTeam(teamForm)">
+        <form #teamForm="ngForm" (ngSubmit)="editTeam()">
           <!-- Name Filed-->
           <div class="form-group">
             <input
@@ -75,7 +75,7 @@
             <input
               type="submit"
               class="btn btn-primary py-3 px-5"
-              value="add Player"
+              value="edit Team"
               [disabled]="teamForm.invalid"
             />
           </div>
