@@ -126,21 +126,30 @@
               formControlName="confirmPassword"
               name="confirmPassword"
               class="form-control"
-              placeholder="ConfirmPassword"
+              placeholder="Confirm Password"
             />
             <div
               *ngIf="
-                signupForm.controls['confirmPassword'].invalid &&
-               ( signupForm.controls['confirmPassword'].touched ||
-                  signupForm.controls['confirmPassword'].dirty)
+                signupForm.controls['confirmPassword'].touched ||
+                signupForm.controls['confirmPassword'].dirty
               "
             >
               <small
-              class="text-danger"
+                class="text-danger"
                 *ngIf="signupForm.controls['confirmPassword'].errors?.['required']"
-              >ConfirmPassword is required</small>
+              >
+                Confirm Password is required
+              </small>
             </div>
+            <small
+              class="text-danger"
+              *ngIf="signupForm.hasError('passwordMismatch')"
+            >
+              Passwords do not match
+            </small>
           </div>
+
+          <!--Phone-->
           <div class="form-group">
             <input
               type="tel"
@@ -149,6 +158,24 @@
               class="form-control"
               placeholder="Tel"
             />
+            <div
+              *ngIf="
+                signupForm.controls['phone'].invalid &&
+                (signupForm.controls['phone'].touched ||
+                  signupForm.controls['phone'].dirty)
+              "
+            >
+              <small
+                class="text-danger"
+                *ngIf="signupForm.controls['phone'].errors?.['required']"
+                >Phone is required</small
+              >
+              <small
+                class="text-danger"
+                *ngIf="signupForm.controls['phone'].errors?.['pattern']"
+                >phone must be 8 numbers</small
+              >
+            </div>
           </div>
 
           <div class="form-group">
