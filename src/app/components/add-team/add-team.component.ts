@@ -19,7 +19,7 @@ teamForm: any;
       this.obj.id = generateId(teams);
       teams.push(this.obj);
       localStorage.setItem('teams', JSON.stringify(teams));
-      console.log('here is obj teams', teams);
+      // console.log('here is obj teams', teams);
       teamForm.resetForm();
       this.obj = {};
     }

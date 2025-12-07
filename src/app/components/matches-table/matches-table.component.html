@@ -6,6 +6,7 @@
       <th scope="col">score two</th>
       <th scope="col">team One</th>
       <th scope="col">team two</th>
+      <th scope="col">Results</th>
       <th scope="col">Action</th>
     </tr>
   </thead>
@@ -14,11 +15,20 @@
       <th scope="row">{{ match.id }}</th>
       <td>{{ match.scoreOne }}</td>
       <td>{{ match.scoreTwo }}</td>
-      <td>{{ match.teamOne }}</td>
-      <td>{{ match.teamTwo }}</td>
+      <td [ngStyle]="{ color: scoreColor(match.scoreOne, match.scoreTwo) }">
+        {{ match.teamOne }}
+      </td>
+      <td [ngStyle]="{ color: scoreColor(match.scoreTwo, match.scoreOne) }">
+        {{ match.teamTwo }}
+      </td>
+      <td>{{message(match)}}</td>
       <td>
-        <button class="btn btn-info mr-2" (click)="goToInfo(match.id)">Info</button>
-        <button class="btn btn-warning mr-2" (click)="goToEdit(match.id)">Edit</button>
+        <button class="btn btn-info mr-2" (click)="goToInfo(match.id)">
+          Info
+        </button>
+        <button class="btn btn-warning mr-2" (click)="goToEdit(match.id)">
+          Edit
+        </button>
         <button class="btn btn-danger mr-2" (click)="deleteMatch(match.id)">
           Delete
         </button>

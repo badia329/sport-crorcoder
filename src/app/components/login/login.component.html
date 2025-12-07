@@ -1,41 +1,86 @@
- <app-banner title="Login"></app-banner>
- 
- <div class="site-section">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-7">
-            <form action="#">
-              <div class="form-group">
-                <input type="email" class="form-control" placeholder="Email">
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="password">
-              </div>
-          
-              <div class="form-group">
-                <input type="submit" class="btn btn-primary py-3 px-5" value="Login">
-              </div>
-            </form>  
+<app-banner title="Login"></app-banner>
+
+<div class="site-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-7">
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+          <div class="form-group">
+            <input
+              formControlName="email"
+              name="email"
+              type="email"
+              class="form-control"
+              placeholder="Email"
+            />
+            <div
+              *ngIf="
+                loginForm.controls['email'].invalid &&
+                (loginForm.controls['email'].touched ||
+                  loginForm.controls['email'].dirty)
+              "
+            >
+              <small
+                class="text-danger"
+                *ngIf="loginForm.controls['email'].errors?.['required']"
+                >Email is required</small
+              ><small
+                class="text-danger"
+                *ngIf="loginForm.controls['email'].errors?.['email']"
+                >Email is invalid</small
+              >
+            </div>
           </div>
-          <div class="col-lg-4 ml-auto">
-            
-            <ul class="list-unstyled">
-              <li class="mb-2">
-                <strong class="text-white d-block">Address</strong>
-                273 South Riverview Rd. <br> New York, NY 10011
-              </li>
-              <li class="mb-2">
-                <strong class="text-white d-block">Email</strong>
-                <a href="#">info&#64;unslate.co</a>
-              </li>
-              <li class="mb-2">
-                <strong class="text-white d-block">
-                  Phone
-                </strong>
-                <a href="#">+12 345 6789 012</a>
-              </li>
-            </ul>
+          <div class="form-group">
+            <input
+              formControlName="password"
+              name="password"
+              type="text"
+              class="form-control"
+              placeholder="password"
+            />
+            <div
+              *ngIf="
+                (loginForm.controls['password'].invalid &&
+                  loginForm.controls['password'].touched) ||
+                loginForm.controls['password'].dirty
+              "
+            >
+              <small
+                class="text-danger"
+                *ngIf="loginForm.controls['password'].errors?.['required']"
+                >Password Is Required</small
+              >
+            </div>
           </div>
-        </div>
+
+          <div class="form-group">
+            <input
+              type="submit"
+              class="btn btn-primary py-3 px-5"
+              value="Login"
+              [disabled]="loginForm.invalid"
+            />
+          </div>
+        </form>
       </div>
-    </div>  
+      <div class="col-lg-4 ml-auto">
+        <ul class="list-unstyled">
+          <li class="mb-2">
+            <strong class="text-white d-block">Address</strong>
+            273 South Riverview Rd. <br />
+            New York, NY 10011
+          </li>
+          <li class="mb-2">
+            <strong class="text-white d-block">Email</strong>
+            <a href="#">info&#64;unslate.co</a>
+          </li>
+          <li class="mb-2">
+            <strong class="text-white d-block"> Phone </strong>
+            <a href="#">+12 345 6789 012</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

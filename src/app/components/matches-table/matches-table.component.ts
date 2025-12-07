@@ -1,10 +1,10 @@
-import { NgFor } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-matches-table',
-  imports: [NgFor],
+  imports: [NgFor, CommonModule],
   templateUrl: './matches-table.component.html',
   styleUrls: ['./matches-table.component.css'],
 })
@@ -29,5 +29,19 @@ export class MatchesTableComponent {
     }
     localStorage.setItem('matches', JSON.stringify(this.matchesTab));
     console.log(matchId);
+  }
+  scoreColor(numberOne: number, numberTwo: number) {
+    return numberOne > numberTwo
+      ? 'green'
+      : numberOne < numberTwo
+      ? 'yellow'
+      : 'Fuchsia';
+  }
+  message(obj: any) {
+    return obj.scoreOne > obj.scoreTwo
+      ? obj.teamOne + ' is the winner'
+      : obj.scoreOne < obj.scoreTwo
+      ? obj.teamTwo + ' is the loser'
+      : 'draw';
   }
 }

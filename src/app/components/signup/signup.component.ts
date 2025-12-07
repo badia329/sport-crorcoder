@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { confirmPasswordValidator } from '../../shared/confirm-password.validator';
+import { generateId } from '../../shared/genricFunction';
 
 @Component({
   selector: 'app-signup',
@@ -16,6 +17,7 @@ import { confirmPasswordValidator } from '../../shared/confirm-password.validato
   styleUrl: './signup.component.css',
 })
 export class SignupComponent {
+  obj: any = {};
   signupForm!: FormGroup;
 
   constructor(private formBuilder: FormBuilder) {}
@@ -36,5 +38,15 @@ export class SignupComponent {
         validators: confirmPasswordValidator,
       }
     );
+  }
+  signup() {
+    const usersTab = JSON.parse(localStorage.getItem('users') || '[]');
+    this.obj = { ...this.signupForm.value };
+    this.obj.id = generateId(usersTab);
+    usersTab.push(this.obj);
+    localStorage.setItem('users', JSON.stringify(usersTab));
+    console.log('here is obj user', usersTab);
+    this.signupForm.reset();
+    this.obj = {};
   }
 }
