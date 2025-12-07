@@ -1,6 +1,7 @@
 import { CommonModule, NgFor } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatchService } from '../../services/match.service';
 
 @Component({
   selector: 'app-matches-table',
@@ -10,9 +11,9 @@ import { Router } from '@angular/router';
 })
 export class MatchesTableComponent {
   matchesTab: any = [];
-  constructor(private router: Router) {}
+  constructor(private router: Router, private matchService: MatchService) {}
   ngOnInit() {
-    this.matchesTab = JSON.parse(localStorage.getItem('matches') || '[]');
+    this.matchService.getAllMatches().subscribe();
   }
   goToInfo(matchId: any) {
     this.router.navigate(['infoMatch/' + matchId]);
@@ -21,14 +22,7 @@ export class MatchesTableComponent {
     this.router.navigate(['editMatch/' + matchId]);
   }
   deleteMatch(matchId: any) {
-    for (let i = 0; i < this.matchesTab.length; i++) {
-      if (this.matchesTab[i].id == matchId) {
-        this.matchesTab.splice(i, 1);
-        break;
-      }
-    }
-    localStorage.setItem('matches', JSON.stringify(this.matchesTab));
-    console.log(matchId);
+    this.matchService.deleteMatch(matchId).subscribe();
   }
   scoreColor(numberOne: number, numberTwo: number) {
     return numberOne > numberTwo

@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { BannerComponent } from '../banner/banner.component';
 import { generateId } from '../../shared/genricFunction';
 import { NgIf } from '@angular/common';
+import { PlayerService } from '../../services/player.service';
 
 @Component({
   selector: 'app-add-player',
@@ -12,16 +13,10 @@ import { NgIf } from '@angular/common';
 })
 export class AddPlayerComponent {
   obj: any = {};
+  constructor(private playerservice: PlayerService) {}
 
-  addPlayer(playerForm: any) {
-    if (playerForm.valid) {
-      const players = JSON.parse(localStorage.getItem('players') || '[]');
-      this.obj.id = generateId(players);
-      players.push(this.obj);
-      localStorage.setItem('players', JSON.stringify(players));
-      console.log('Here is player obj', this.obj);
-      playerForm.resetForm(); 
-      this.obj = {}; 
-    } 
+  addPlayer() {
+    this.playerservice.getPlayerById(this.obj).subscribe();
+    
   }
 }

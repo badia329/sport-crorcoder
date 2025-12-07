@@ -3,6 +3,7 @@ import { BannerComponent } from '../banner/banner.component';
 import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TeamService } from '../../services/team.service';
 
 @Component({
   selector: 'app-team-edit',
@@ -12,26 +13,19 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class TeamEditComponent {
   obj: any = {};
-  constructor(private activatedRoute: ActivatedRoute, private router: Router) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private teamServer: TeamService
+  ) {}
 
   ngOnInit() {
     let id = this.activatedRoute.snapshot.params['id'];
-    let teamsTab = JSON.parse(localStorage.getItem('teams') || '[]');
-    for (let i = 0; i < teamsTab.length; i++) {
-      if (teamsTab[i].id == id) {
-        this.obj = teamsTab[i];
-      }
-    }
+    this.teamServer.editTeam(id).subscribe();
   }
   editTeam() {
-    const teamTab = JSON.parse(localStorage.getItem('teams') || '[]');
-    for (let i = 0; i < teamTab.length; i++) {
-      if (teamTab[i].id == this.obj.id) {
-        teamTab[i] = this.obj;
-        break;
-      }
-    }
-    localStorage.setItem('teams', JSON.stringify(teamTab));
+    console.log('here is new values', this.obj)
+    this.teamServer.editTeam(this.obj).subscribe()
     this.router.navigate(['admin']);
   }
 }

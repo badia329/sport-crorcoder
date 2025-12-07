@@ -1,6 +1,7 @@
 import { NgFor } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { PlayerService } from '../../services/player.service';
 
 @Component({
   selector: 'app-teams-table',
@@ -10,22 +11,14 @@ import { Router } from '@angular/router';
 })
 export class TeamsTableComponent {
   teamsTab: any = [];
-  constructor(private router: Router) {}
+  constructor(private router: Router, private playerService: PlayerService) {}
   ngOnInit() {
-    this.teamsTab = JSON.parse(localStorage.getItem('teams') || '[]');
+    this.playerService.getAllPlayers().subscribe();
   }
   goToEdit(teamId: any) {
     this.router.navigate(['editTeam/' + teamId]);
   }
   deletePlayer(teamId: any) {
-    for (let i = 0; i < this.teamsTab.length; i++) {
-      if (this.teamsTab[i].id == teamId) {
-        this.teamsTab.splice(i, 1);
-        break;
-      }
-    }
-    localStorage.setItem("teams", JSON.stringify(this.teamsTab))
-    console.log(this.teamsTab);
-
+    this.playerService.deletePlayer(teamId).subscribe()
   }
 }

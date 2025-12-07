@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { BannerComponent } from '../banner/banner.component';
-import { generateId } from '../../shared/genricFunction';
 import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
+import { TeamService } from '../../services/team.service';
 
 @Component({
   selector: 'app-add-team',
@@ -12,16 +12,9 @@ import { NgIf } from '@angular/common';
 })
 export class AddTeamComponent {
   obj: any = {};
-teamForm: any;
-  addTeam(teamForm: any) {
-    if (teamForm.valid) {
-      const teams = JSON.parse(localStorage.getItem('teams') || '[]');
-      this.obj.id = generateId(teams);
-      teams.push(this.obj);
-      localStorage.setItem('teams', JSON.stringify(teams));
-      // console.log('here is obj teams', teams);
-      teamForm.resetForm();
-      this.obj = {};
-    }
+  constructor(private teamService: TeamService) {}
+  teamForm: any;
+  addTeam() {
+    this.teamService.getTeambyId(this.obj).subscribe;
   }
 }

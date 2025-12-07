@@ -2,25 +2,22 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { getFormlS } from '../../shared/genricFunction';
 import { ResultComponent } from '../result/result.component';
+import { MatchService } from '../../services/match.service';
 
 @Component({
   selector: 'app-match-info',
   imports: [ResultComponent],
   templateUrl: './match-info.component.html',
-  styleUrl: './match-info.component.css'
+  styleUrl: './match-info.component.css',
 })
 export class MatchInfoComponent {
   foundMatch: any = {};
-  constructor(private activatedRoute: ActivatedRoute) {
-  }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private matchService: MatchService
+  ) {}
   ngOnInit() {
-    let matchId = this.activatedRoute.snapshot.params["id"];
-    let matches = getFormlS("matches");
-    for (let i = 0; i < matches.length; i++) {
-      if (matches[i].id == matchId) {
-        this.foundMatch = matches[i];
-        break;
-      }
-    }
+    let matchId = this.activatedRoute.snapshot.params['id'];
+    this.matchService.getMatchById(matchId).subscribe();
   }
 }

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BannerComponent } from "../banner/banner.component";
+import { BannerComponent } from '../banner/banner.component';
 import { NgIf } from '@angular/common';
+import { MatchService } from '../../services/match.service';
 
 @Component({
   selector: 'app-match-edit',
@@ -12,27 +13,19 @@ import { NgIf } from '@angular/common';
 })
 export class MatchEditComponent {
   obj: any = {};
-  constructor(private activatedRoute: ActivatedRoute, private router: Router) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private matchService: MatchService
+  ) {}
   ngOnInit() {
     let id = this.activatedRoute.snapshot.params['id'];
-    const matchesTab = JSON.parse(localStorage.getItem('matches') || '[]');
-    for (let i = 0; i < matchesTab.length; i++) {
-      if (matchesTab[i].id == id) {
-        this.obj = matchesTab[i];
-        break;
-      }
-    }
+    this.matchService.editMatch(id).subscribe();
   }
 
-  editMatch(matchForm:any) {
-    const matchesTab = JSON.parse(localStorage.getItem('matches') || '[]');
-    for (let i = 0; i < matchesTab.length; i++) {
-      if (matchesTab[i].id == this.obj.id) {
-        matchesTab[i] = this.obj;
-        break;
-      }
-    }
-    localStorage.setItem('matches', JSON.stringify(matchesTab));
+  editMatch() {
+    console.log('here is new values', this.obj);
+    this.matchService.editMatch(this.obj).subscribe();
     this.router.navigate(['admin']);
   }
 }

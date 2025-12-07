@@ -1,6 +1,7 @@
-import { NgFor} from '@angular/common';
+import { NgFor } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { PlayerService } from '../../services/player.service';
 
 @Component({
   selector: 'app-players-table',
@@ -10,13 +11,15 @@ import { Router } from '@angular/router';
 })
 export class PlayersTableComponent {
   playersTab: any = [];
-  constructor(private router: Router) {}
+  constructor(private router: Router, private playerService: PlayerService) {}
   ngOnInit() {
-    this.playersTab = JSON.parse(localStorage.getItem('players') || '[]');
+    this.playerService.getAllPlayers().subscribe();
   }
 
   goToEdit(playerId: any) {
     this.router.navigate(['editPlayer/' + playerId]);
   }
- deletePlayer() {}
+  deletePlayer(playerId: any) {
+    this.playerService.deletePlayer(playerId).subscribe();
+  }
 }
