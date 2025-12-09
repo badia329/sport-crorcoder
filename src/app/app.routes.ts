@@ -11,6 +11,7 @@ import { MatchInfoComponent } from './components/match-info/match-info.component
 import { MatchEditComponent } from './components/match-edit/match-edit.component';
 import { TeamEditComponent } from './components/team-edit/team-edit.component';
 import { PlayerEditComponent } from './components/player-edit/player-edit.component';
+import { SearchMatchComponent } from './components/search-match/search-match.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -25,4 +26,5 @@ export const routes: Routes = [
   { path: 'editMatch/:id', component: MatchEditComponent },
   { path: 'editTeam/:id', component: TeamEditComponent },
   { path: 'editPlayer/:id', component: PlayerEditComponent },
+  { path: 'search', component: SearchMatchComponent },
 ];
