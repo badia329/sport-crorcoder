@@ -5,19 +5,19 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class TeamService {
-  teamUrl: string = 'http:/localhost:3000/teams';
+  teamUrl: string = 'http://localhost:3000/teams';
   constructor(private httpClient: HttpClient) {}
-  getAllTeams() {
+  getAllteams() {
     return this.httpClient.get(this.teamUrl);
   }
-  getTeambyId(id: number) {
+  getTeamById(id: number) {
     return this.httpClient.get(this.teamUrl + '/' + id);
+  }
+  addTeam(obj: any) {
+    return this.httpClient.post(this.teamUrl, obj);
   }
   deleteTeam(id: number) {
     return this.httpClient.delete(this.teamUrl + '/' + id);
-  }
-  addteam(obj: any) {
-    return this.httpClient.post(this.teamUrl, obj);
   }
   editTeam(newObj: any) {
     return this.httpClient.put(this.teamUrl, newObj);

@@ -15,6 +15,6 @@ export class AddTeamComponent {
   constructor(private teamService: TeamService) {}
   teamForm: any;
   addTeam() {
-    this.teamService.getTeambyId(this.obj).subscribe;
+    this.teamService.getTeamById(this.obj).subscribe;
   }
 }

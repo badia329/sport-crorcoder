@@ -14,7 +14,7 @@ export class AddMatchComponent {
   obj: any = {};
   constructor(private matchService: MatchService) {}
   addMatch() {
-    // console.log('Here is  match Obj', this.obj);
+    console.log('Here is  match Obj', this.obj);
     this.matchService.addMatch(this.obj).subscribe();
   }
 }

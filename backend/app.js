@@ -66,11 +66,11 @@ app.get("/matches/:id", (req, res) => {
       foundMatch = matches[i];
       break;
     }
-    if (foundMatch) {
-      res.json({ obj: foundMatch });
-    } else {
-      res.json({ msg: "Match not found!" });
-    }
+  }
+  if (foundMatch) {
+    res.json({ obj: foundMatch });
+  } else {
+    res.json({ msg: "Match not found!" });
   }
 });
 // Business Logic: Delete Match By Id
@@ -121,11 +121,29 @@ app.put("/matches", (req, res) => {
   console.log("Business Logic: Edit Match ");
   let newMatch = req.body;
   for (let i = 0; i < matches.length; i++) {
-    if (matches[i].id == newMatch) {
+    if (matches[i].id == newMatch.id) {
+      matches[i] = newMatch;
       break;
     }
   }
   res.json({ msg: "Edited with succes!" });
+});
+//business logic: search matches by team
+app.post("/matches/searchMatch", (req, res) => {
+  console.log("Business Logic: Search Matches By Team Name");
+  let teamName = req.body.name;
+  console.log("here is object", teamName);
+  let results = [];
+  for (let i = 0; i < matches.length; i++) {
+    if (matches[i].teamOne == teamName || matches[i].teamTwo == teamOne) {
+      results.push(matches[i]);
+    }
+    if (results.length > 0) {
+      res.json({ tab: results });
+    } else {
+      res.json({ msg: "No mathces found!" });
+    }
+  }
 });
 module.exports = app;
 // export app

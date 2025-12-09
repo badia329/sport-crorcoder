@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { getFormlS } from '../../shared/genricFunction';
 import { ResultComponent } from '../result/result.component';
 import { MatchService } from '../../services/match.service';
 

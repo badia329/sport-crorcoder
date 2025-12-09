@@ -13,12 +13,13 @@ export class MatchService {
   // repnse : array of matches
   getAllMatches() {
     return this.httpClient.get(this.matchUrl);
-  }
+  } 
   // request 1 : get match by id
   // reponse : one object
   getMatchById(id: number) {
     return this.httpClient.get(this.matchUrl + '/' + id);
-  }
+  
+     }
   // request 3 : delete match by id
   // response: true/ flase || 'deleted/not deleted
   deleteMatch(id: number) {
