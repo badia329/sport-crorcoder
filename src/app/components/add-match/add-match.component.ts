@@ -15,6 +15,10 @@ export class AddMatchComponent {
   constructor(private matchService: MatchService) {}
   addMatch() {
     console.log('Here is  match Obj', this.obj);
-    this.matchService.addMatch(this.obj).subscribe();
+    this.matchService.addMatch(this.obj).subscribe(
+      (response) => {
+        console.log("Here is response from adding match ", response)
+      }
+    );
   }
 }

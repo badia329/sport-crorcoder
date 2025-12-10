@@ -12,14 +12,13 @@ export class MatchService {
   // request number one : get all matches
   // repnse : array of matches
   getAllMatches() {
-    return this.httpClient.get(this.matchUrl);
-  } 
+    return this.httpClient.get<{tab: any, nbr: number}>(this.matchUrl);
+  }
   // request 1 : get match by id
   // reponse : one object
   getMatchById(id: number) {
     return this.httpClient.get(this.matchUrl + '/' + id);
-  
-     }
+  }
   // request 3 : delete match by id
   // response: true/ flase || 'deleted/not deleted
   deleteMatch(id: number) {
@@ -28,11 +27,11 @@ export class MatchService {
   // request 4 : add match
   // response : created object // true/falsec || 'added/not added'
   addMatch(obj: any) {
-    return this.httpClient.post(this.matchUrl, obj);
+    return this.httpClient.post<{ msg: string }>(this.matchUrl, obj);
   }
   // request 5 : edit match
   // response : true/false || 'edited/not edited
   editMatch(newObj: any) {
-    return this.httpClient.put(this.matchUrl, newObj); 
+    return this.httpClient.put(this.matchUrl, newObj);
   }
 }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ResultComponent } from '../result/result.component';
 import { NgFor } from '@angular/common';
+import { MatchService } from '../../services/match.service';
 
 @Component({
   selector: 'app-matches',
@@ -9,8 +10,13 @@ import { NgFor } from '@angular/common';
   styleUrl: './matches.component.css',
 })
 export class MatchesComponent {
-  matchesTab: any = [];
+  constructor(private matchService: MatchService) {}
+
+  matches: any = [];
   ngOnInit() {
-    this.matchesTab= JSON.parse(localStorage.getItem("matches") || "[]");
+    this.matchService.getAllMatches().subscribe((data) => {
+      console.log('Here is data From BE', data);
+      this.matches = data.tab;
+    });
   }
 }
