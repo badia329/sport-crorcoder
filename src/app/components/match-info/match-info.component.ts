@@ -17,6 +17,11 @@ export class MatchInfoComponent {
   ) {}
   ngOnInit() {
     let matchId = this.activatedRoute.snapshot.params['id'];
-    this.matchService.getMatchById(matchId).subscribe();
+    this.matchService.getMatchById(matchId).subscribe(
+      (response) => {
+        console.log("Here is object BE", response);
+        this.foundMatch = response.obj;
+      }
+    );
   }
 }

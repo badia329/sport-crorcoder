@@ -5,20 +5,26 @@
       <th scope="col">name</th>
       <th scope="col">Owner</th>
       <th scope="col">foundation</th>
+      <th scope="col">players Info</th>
       <th scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let team of teamsTab">
-      <th scope="row">{{ team.id }}</th>
+      <th scope="row">{{ team._id }}</th>
       <td>{{ team.name }}</td>
       <td>{{ team.owner }}</td>
       <td>{{ team.foundation }}</td>
       <td>
-        <button class="btn btn-warning mr-2" (click)="goToEdit(team.id)">
+        <div *ngFor="let player of team.playerId" class="mb-2">
+       name: {{ player.name }} Position: {{ player.position }}  Number: {{ player.number }}
+        </div>
+      </td>
+      <td>
+        <button class="btn btn-warning mr-2" (click)="goToEdit(team._id)">
           Edit
         </button>
-        <button class="btn btn-danger mr-2" (click)="deletePlayer(team.id)">
+        <button class="btn btn-danger mr-2" (click)="deleteTeam(team._id)">
           Delete
         </button>
       </td>

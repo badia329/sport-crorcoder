@@ -1,11 +1,11 @@
-import { CommonModule, NgFor } from '@angular/common';
+  import { CommonModule} from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatchService } from '../../services/match.service';
 
 @Component({
   selector: 'app-matches-table',
-  imports: [NgFor, CommonModule],
+  imports: [CommonModule],
   templateUrl: './matches-table.component.html',
   styleUrls: ['./matches-table.component.css'],
 })
@@ -13,17 +13,28 @@ export class MatchesTableComponent {
   matchesTab: any = [];
   constructor(private router: Router, private matchService: MatchService) {}
   ngOnInit() {
-    this.matchService.getAllMatches().subscribe();
+    this.matchService.getAllMatches().subscribe((data) => {
+      console.log('Here is data from BE', data);
+      this.matchesTab = data.tab;
+    });
   }
-  goToInfo(matchId: any) {
+  goToInfo(matchId: string) {
     this.router.navigate(['infoMatch/' + matchId]);
   }
-  goToEdit(matchId: any) {
+  goToEdit(matchId: string) {
     this.router.navigate(['editMatch/' + matchId]);
   }
-  deleteMatch(matchId: any) {
-    this.matchService.deleteMatch(matchId).subscribe();
+  deleteMatch(matchId: string) {
+    this.matchService.deleteMatch(matchId).subscribe((response) => {
+      console.log('Here is response after match delete', response);
+      if (response.isDeleted) {
+        this.matchService.getAllMatches().subscribe((data) => {
+          this.matchesTab = data.tab;
+        });
+      }
+    });
   }
+
   scoreColor(numberOne: number, numberTwo: number) {
     return numberOne > numberTwo
       ? 'green'

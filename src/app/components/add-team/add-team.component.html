@@ -50,25 +50,37 @@
           <!--Foundation-->
           <div class="form-group">
             <input
-              type="text"
+              type="number"
               [(ngModel)]="obj.foundation"
               class="form-control"
               placeholder="Foundation"
               name="foundation"
               required
-              minlength="4"
               #foundation="ngModel"
             />
             <div *ngIf="foundation.invalid && foundation.touched">
               <small class="text-danger" *ngIf="foundation.errors?.['required']"
                 >Owner is required</small
               >
-              <small
-                class="text-danger"
-                *ngIf="foundation.errors?.['minlength']"
-                >Owner must be at least 4 characters</small
-              >
             </div>
+          </div>
+          <!--StadiumTab-->
+          <div class="form-group">
+            <select
+              name="selectedStadium"
+              id=""
+              class="form-control"
+              [(ngModel)]="obj.stadiumId"
+            >
+              <option
+                name="ngModel"
+                [value]="stadium._id"
+                *ngFor="let stadium of stadiumTab"
+                style="color: black"
+              >
+                {{ stadium.name }}
+              </option>
+            </select>
           </div>
           <!--Submit-->
           <div class="form-group">

@@ -16,16 +16,21 @@ export class TeamEditComponent {
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private teamServer: TeamService
+    private teamService: TeamService
   ) {}
 
   ngOnInit() {
     let id = this.activatedRoute.snapshot.params['id'];
-    this.teamServer.editTeam(id).subscribe();
+    this.teamService.getTeamById(id).subscribe((data) => {
+      console.log('Here is data from BE', data);
+      this.obj = data.obj;
+    });
   }
   editTeam() {
-    console.log('here is new values', this.obj)
-    this.teamServer.editTeam(this.obj).subscribe()
-    this.router.navigate(['admin']);
+    console.log('here is new values', this.obj);
+    this.teamService.editTeam(this.obj).subscribe((response) => {
+      console.log('Here is response after Team update', response);
+      this.router.navigate(['admin']);
+    });
   }
 }

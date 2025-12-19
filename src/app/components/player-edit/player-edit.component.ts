@@ -12,19 +12,24 @@ import { PlayerService } from '../../services/player.service';
   styleUrl: './player-edit.component.css',
 })
 export class PlayerEditComponent {
-  obj: any = [];
+  obj: any = {};
   constructor(
-    private acitveRoute: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private router: Router,
-    private playreService: PlayerService
+    private playerService: PlayerService
   ) {}
   ngOnInit() {
-    let id = this.acitveRoute.snapshot.params['id'];
-    this.playreService.editPlayer(id).subscribe();
+    let id = this.activatedRoute.snapshot.params['id'];
+    this.playerService.getPlayerById(id).subscribe((data) => {
+      console.log('Here is data from BE', data);
+      this.obj = data.obj;
+    });
   }
   editPlayer() {
     console.log('here is new values', this.obj);
-    this.playreService.editPlayer(this.obj).subscribe();
-    this.router.navigate(['admin']);
+    this.playerService.editPlayer(this.obj).subscribe((response) => {
+      console.log('Here is response after Player update', response);
+      this.router.navigate(['admin']);
+    });
   }
 }

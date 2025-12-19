@@ -17,8 +17,7 @@ export class AddMatchComponent {
     console.log('Here is  match Obj', this.obj);
     this.matchService.addMatch(this.obj).subscribe(
       (response) => {
-        console.log("Here is response from adding match ", response)
-      }
-    );
+      console.log('Here is response from adding match ', response);
+    });
   }
 }

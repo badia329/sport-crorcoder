@@ -12,19 +12,27 @@ import { MatchEditComponent } from './components/match-edit/match-edit.component
 import { TeamEditComponent } from './components/team-edit/team-edit.component';
 import { PlayerEditComponent } from './components/player-edit/player-edit.component';
 import { SearchMatchComponent } from './components/search-match/search-match.component';
+import { StadiumComponent } from './components/stadium/stadium.component';
+import { AddStadiumComponent } from './components/add-stadium/add-stadium.component';
+import { StadiumEditComponent } from './components/stadium-edit/stadium-edit.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'signin', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
+  { path: 'signupAdmin', component: SignupComponent },
+  { path: 'signupOwner', component: SignupComponent },
   { path: 'addMatch', component: AddMatchComponent },
   { path: 'addTeam', component: AddTeamComponent },
   { path: 'addPlayer', component: AddPlayerComponent },
+  { path: 'addStadium', component: AddStadiumComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'matches', component: MatchesComponent },
+  { path: 'Stadiums', component: StadiumComponent },
   { path: 'infoMatch/:id', component: MatchInfoComponent },
   { path: 'editMatch/:id', component: MatchEditComponent },
   { path: 'editTeam/:id', component: TeamEditComponent },
   { path: 'editPlayer/:id', component: PlayerEditComponent },
+  { path: 'editStadium/:id', component: StadiumEditComponent },
   { path: 'search', component: SearchMatchComponent },
 ];

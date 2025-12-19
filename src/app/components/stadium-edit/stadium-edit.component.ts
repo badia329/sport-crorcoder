@@ -1,33 +1,33 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { StadiumService } from '../../services/stadium.service';
+import { FormsModule } from '@angular/forms';
 import { BannerComponent } from '../banner/banner.component';
-import { NgIf } from '@angular/common';
-import { MatchService } from '../../services/match.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-match-edit',
-  imports: [FormsModule, BannerComponent, NgIf],
-  templateUrl: './match-edit.component.html',
-  styleUrl: './match-edit.component.css',
+  selector: 'app-stadium-edit',
+  imports: [FormsModule, BannerComponent, CommonModule],
+  templateUrl: './stadium-edit.component.html',
+  styleUrl: './stadium-edit.component.css'
 })
-export class MatchEditComponent {
-  obj: any = {};
+export class StadiumEditComponent {
+ obj: any = {};
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private matchService: MatchService
+    private stadiumService: StadiumService
   ) {}
   ngOnInit() {
     let id = this.activatedRoute.snapshot.params['id'];
-    this.matchService.getMatchById(id).subscribe((data) => {
+    this.stadiumService.getStadiumById(id).subscribe((data) => {
       console.log('Here is data from BE', data);
       this.obj = data.obj;
     });
   }
-  editMatch() {
+  editStadium() {
     console.log('here is new values', this.obj);
-    this.matchService.editMatch(this.obj).subscribe((response) => {
+    this.stadiumService.editStadium(this.obj).subscribe((response) => {
       console.log('Here is response after Match update', response);
       this.router.navigate(['admin']);
     });

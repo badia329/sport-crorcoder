@@ -8,7 +8,8 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { confirmPasswordValidator } from '../../shared/confirm-password.validator';
-import { generateId } from '../../shared/genricFunction';
+import { UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -19,12 +20,15 @@ import { generateId } from '../../shared/genricFunction';
 export class SignupComponent {
   obj: any = {};
   signupForm!: FormGroup;
+  errorMsg: string = '';
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    console.log('Here sign Up');
-
     this.signupForm = this.formBuilder.group(
       {
         firstName: ['', [Validators.required, Validators.minLength(3)]],
@@ -40,13 +44,21 @@ export class SignupComponent {
     );
   }
   signup() {
-    const usersTab = JSON.parse(localStorage.getItem('users') || '[]');
-    this.obj = { ...this.signupForm.value };
-    this.obj.id = generateId(usersTab);
-    usersTab.push(this.obj);
-    localStorage.setItem('users', JSON.stringify(usersTab));
-    console.log('here is obj user', usersTab);
-    this.signupForm.reset();
-    this.obj = {};
+    console.log('Here is user', this.signupForm.value);
+    let path = this.router.url;
+    console.log('Here is path', path);
+    if (path == '/signup') {
+      this.signupForm.value.role = 'client';
+    } else {
+      this.signupForm.value.role = 'admin';
+    }
+    this.userService.signup(this.signupForm.value).subscribe((data) => {
+      console.log('Here is response agter signup', data);
+      if (data.isAdded) {
+        this.router.navigate(['signin']);
+      } else {
+        this.errorMsg = 'Email Already Exists';
+      }
+    });
   }
 }

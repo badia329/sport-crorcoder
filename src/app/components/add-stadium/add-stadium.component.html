@@ -1,11 +1,11 @@
-<app-banner title="add Player"></app-banner>
+<app-banner title="Add Stadium"></app-banner>
 
 <div class="site-section">
   <div class="container">
     <div class="row">
       <div class="col-lg-7">
-        <form #playerForm="ngForm" (ngSubmit)="addPlayer()">
-          <!-- Name Filed-->
+        <form #matchForm="ngForm" (ngSubmit)="addStadium()">
+          <!-- name Filed-->
           <div class="form-group">
             <input
               type="text"
@@ -26,82 +26,47 @@
               >
             </div>
           </div>
-          <!-- Age Filed-->
+          <!-- Capacity Filed-->
           <div class="form-group">
             <input
               type="text"
-              [(ngModel)]="obj.age"
+              [(ngModel)]="obj.capacity"
               class="form-control"
-              placeholder="Age"
-              name="age"
+              placeholder="Capacity"
+              name="capacity"
               required
-              #age="ngModel"
+              #capacity="ngModel"
             />
-            <div *ngIf="age.invalid && age.touched">
-              <small class="text-danger" *ngIf="age.errors?.['required']"
-                >age is required</small
+            <div *ngIf="capacity.invalid && capacity.touched">
+              <small class="text-danger" *ngIf="capacity.errors?.['required']"
+                >Capacity is required</small
               >
             </div>
           </div>
-          <!--Position-->
+          <!-- Country Filed-->
           <div class="form-group">
             <input
               type="text"
-              [(ngModel)]="obj.position"
+              [(ngModel)]="obj.country"
               class="form-control"
-              placeholder="position"
-              name="position"
+              placeholder="Country"
+              name="country"
               required
-              #position="ngModel"
+              #country="ngModel"
             />
-            <div *ngIf="position.invalid && position.touched">
-              <small class="text-danger" *ngIf="position.errors?.['required']"
-                >Position is required</small
+            <div *ngIf="country.invalid && country.touched">
+              <small class="text-danger" *ngIf="country.errors?.['required']"
+                >country is required</small
               >
             </div>
           </div>
-          <!--Number-->
-          <div class="form-group">
-            <input
-              type="number"
-              [(ngModel)]="obj.number"
-              class="form-control"
-              placeholder="number"
-              name="number"
-              required
-              #number="ngModel"
-            />
-            <div *ngIf="number.invalid && number.touched">
-              <small class="text-danger" *ngIf="number.errors?.['required']"
-                >Number is required</small
-              >
-            </div>
-          </div>
-          <!--TeamsTab-->
-          <div class="form-group">
-            <select
-              name="selectedTeam"
-              id=""
-              class="form-control"
-              [(ngModel)]="obj.teamId"
-            >
-              <option
-                name="ngModel"
-                [value]="team._id"
-                *ngFor="let team of teamsTab"
-                style="color: black"
-              >
-                {{ team.name }}
-              </option>
-            </select>
-          </div>
-          <!--Submit-->
+       
           <div class="form-group">
             <input
               type="submit"
               class="btn btn-primary py-3 px-5"
-              value="add Player"
-              [disabled]="playerForm.invalid"
+              value="add Stadium"
+              [disabled]="matchForm.invalid"
             />
           </div>
         </form>

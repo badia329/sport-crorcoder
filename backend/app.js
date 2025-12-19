@@ -1,6 +1,10 @@
 // import express module
 const express = require("express");
 const cors = require("cors");
+const bcrypt = require('bcrypt');
+// sportDB: DB name
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://127.0.0.1:27017/sportDB');
 // creates express app
 const app = express();
 //export app
@@ -10,194 +14,315 @@ app.use(cors());
 app.use(express.json());
 //Get Object from Req
 app.use(express.urlencoded({ extended: true }));
-// DB Simulation
-let matches = [
-  {
-    id: 1,
-    teamOne: "Manchester United",
-    teamTwo: "Liverpool",
-    scoreOne: 6,
-    scoreTwo: 4,
-  },
-  {
-    id: 2,
-    teamOne: "Team Liquid",
-    teamTwo: "Fnatic",
-    scoreOne: 10,
-    scoreTwo: 9,
-  },
-  {
-    id: 3,
-    teamOne: "Basketball Playoffs",
-    teamTwo: "Chelsea",
-    scoreOne: 5,
-    scoreTwo: 6,
-  },
-  {
-    id: 4,
-    teamOne: "Real Madrid",
-    teamTwo: "Barcelona",
-    scoreOne: 3,
-    scoreTwo: 2,
-  },
-  {
-    id: 5,
-    teamOne: "PSG",
-    teamTwo: "Bayern Munich",
-    scoreOne: 1,
-    scoreTwo: 3,
-  },
-];
-let players = [
-  {
-    id: 1,
-    name: "player 1",
-    nbr: "10",
-    position: "ATK",
-    age: 40,
-    teamId: 1
-  },
-  {
-    id: 2,
-    name: "player 2",
-    nbr: "11",
-    position: "MID",
-    age: 19,
-    teamId: 2,
-  },
-  {
-    id: 3,
-    name: "player 3",
-    nbr: "15",
-    position: "Gk",
-    age: 6,
-    teamId: 3
-  },
-
-];
-let teams = [
-  {
-    id: 1,
-    name: "Team A",
-    owner: "Ali",
-    foundation: 1988,
-  },
-  {
-    id: 2,
-    name: "Team B",
-    owner: "Salah",
-    foundation: 1989,
-  },
-  {
-    id: 1,
-    name: "Team A",
-    owner: "Med",
-    foundation: 1985,
-  },
-];
-let users = [
-  {
-    firstName: "Ali",
-    lastName: "Hassan",
-    email: "ali@example.com",
-    password: "123456",
-    phone: 78945321,
-  },
-  {
-    firstName: "Sara",
-    lastName: "Khaled",
-    email: "sara@example.com",
-    password: "123456",
-    phone: 36546213,
-  },
-  {
-    firstName: "Omar",
-    lastName: "Fathi",
-    email: "omar@example.com",
-    password: "123456",
-    phone: 6547853,
-  }
-];
-
-// Traitement logique des reqs
+// import models 
+const Match = require("./models/match");
+const User = require("./models/user")
+const Player = require("./models/player")
+const Team = require("./models/team")
+const Stadium = require("./models/stadium");
+const stadium = require("./models/stadium");
 // business logic: Get All Matches
 app.get("/matches", (req, res) => {
   console.log("Business Logic: Get All Matches");
-  res.json({ tab: matches, nbr: matches.length });
+  Match.find().then(
+    (data) => {
+      console.log("Here is data from collection Matches", data);
+      res.json({ tab: data, nbr: data.length });
+
+    }
+  )
 });
+// Business Logic: Get All Teams
+app.get("/teams", (req, res) => {
+  console.log("Business Logic: Get All Teams");
+  Team.find().populate("playerId").then(
+    (data) => {
+      console.log("Here is data from collection teams", data);
+      res.json({ tab: data, nbr: data.length });
+    }
+  )
+})
+// Business Logic: Get All Players
+app.get("/players", (req, res) => {
+  console.log("Business Logic: Get All Players");
+  Player.find().populate("teamId").then(
+    (data) => {
+      console.log("Here is data from collection Players", data);
+      res.json({ tab: data, nbr: data.length });
+    }
+  )
+})
+// Business Logic: Get All Stadium
+app.get("/stadium", (req, res) => {
+  console.log("Business Logic: Get All Stadium");
+  Stadium.find().then(
+    (data) => {
+      console.log("Here is data from collection Stadium", data);
+      res.json({ tab: data, nbr: data.length });
+    }
+  )
+})
 // Business Logic: Get Match By Id
-// :id => dynamic parameter
 app.get("/matches/:id", (req, res) => {
   console.log("Business Logic: Get Match By Id");
   let matchId = req.params.id;
-  let foundMatch;
   console.log("Here is Id", matchId);
-  for (let i = 0; i < matches.length; i++) {
-    if (matches[i].id == matchId) {
-      foundMatch = matches[i];
-      break;
+  Match.findById(matchId).then(
+    (data) => {
+      console.log("Here is data matches collection", data);
+      if (data) {
+        res.json({ obj: data })
+      } else {
+        res.json({ msg: "Match not found" })
+      }
     }
-  }
-  if (foundMatch) {
-    res.json({ obj: foundMatch });
-  } else {
-    res.json({ msg: "Match not found!" });
-  }
+  )
+
+});
+// Business Logic: Get Player By Id
+app.get("/players/:id", (req, res) => {
+  console.log("Business Logic: Get Match By Id");
+  let playerId = req.params.id;
+  console.log("Here is Id", playerId);
+  Match.findById(playerId).then(
+    (data) => {
+      console.log("Here is data Players collection", data);
+      if (data) {
+        res.json({ obj: data })
+      } else {
+        res.json({ msg: "player not found" })
+      }
+    }
+  )
+
+});
+// Business Logic: Get team By Id
+app.get("/teams/:id", (req, res) => {
+  console.log("Business Logic: Get Team By Id");
+  let teamId = req.params.id;
+  console.log("Here is Id", teamId);
+  Team.findById(teamId).then(
+    (data) => {
+      console.log("Here is data matches collection", data);
+      if (data) {
+        res.json({ obj: data })
+      } else {
+        res.json({ msg: "Team not found" })
+      }
+    }
+  )
+});
+// Business Logic: Get Stadium By Id
+app.get("/stadium/:id", (req, res) => {
+  console.log("Business Logic: Get Stadium By Id");
+  let stadiumId = req.params.id;
+  console.log("Here is Id", stadiumId);
+  Stadium.findById(stadiumId).then(
+    (data) => {
+      console.log("Here is data Stadiums collection", data);
+      if (data) {
+        res.json({ obj: data })
+      } else {
+        res.json({ msg: "Stadium not found" })
+      }
+    }
+  )
 });
 // Business Logic: Delete Match By Id
 app.delete("/matches/:id", (req, res) => {
   console.log("Business Logic: Delete Match By Id", req.params.id);
-  let matchId = req.params.id;
-  let isDeleted = false;
-  for (let i = 0; i < matches.length; i++) {
-    if (matches[i].id == matchId) {
-      matches.splice(i, 1);
-      isDeleted = true;
-      break;
+  Match.deleteOne({ _id: req.params.id }).then((deleteRes) => {
+    console.log("Here is response from successfully!", deleteRes);
+    if (deleteRes.deletedCount == 1) {
+      res.json({ msg: "Match deleted successfully!", isDeleted: true });
+    } else {
+      res.json({
+        msg: `Match N°${req.params.id} not found`,
+        isDeleted: false,
+      });
     }
-  }
-
-  if (isDeleted) {
-    res.json({ msg: "Match deleted successfully" });
-  } else {
-    res.json({ msg: `Match N°${matchId} not found` });
-  }
+  });
 });
-// Business Logic: Add Match By Id
+// Business Logic: Delete Player By Id
+app.delete("/players/:id", (req, res) => {
+  console.log("Business Logic: Delete Player By Id", req.params.id);
+  Player.deleteOne({ _id: req.params.id }).then((deleteRes) => {
+    console.log("Here is response from successfully!", deleteRes);
+    if (deleteRes.deletedCount == 1) {
+      res.json({ msg: "Player deleted successfully!", isDeleted: true });
+    } else {
+      res.json({
+        msg: `Player N°${req.params.id} not found`,
+        isDeleted: false,
+      });
+    }
+  });
+});
+// Business Logic: Delete team By Id
+app.delete("/team/:id", (req, res) => {
+  console.log("Business Logic: Delete Team by id", req.params.id);
+  Team.deleteOne({ _id: req.params.id }).then((deleteRes) => {
+    console.log("Here is response from successfully!", deleteRes);
+    if (deleteRes.deletedCount == 1) {
+      res.json({ msg: "Team deleted successfully", isDeleted: true })
+    } else {
+      res.json({
+        msg: `Team N°${req.params.id} not found`,
+        isDeleted: false
+      })
+    }
+  })
+})
+// Business Logic: Delete Stadium By Id
+app.delete("/stadium/:id", (req, res) => {
+  console.log("Business Logic: Delete stadium by id", req.params.id);
+  Stadium.deleteOne({ _id: req.params.id }).then((deleteRes) => {
+    console.log("Here is response from successfully!", deleteRes);
+    if (deleteRes.deletedCount == 1) {
+      res.json({ msg: "Stadium deleted successfully", isDeleted: true })
+    } else {
+      res.json({
+        msg: `stadium N°${req.params.id} not found`,
+        isDeleted: false
+      })
+    }
+  })
+})
+// Business Logic: Add Match
 app.post("/matches", (req, res) => {
   console.log("Business Logic: Add Match");
-  let matchObj = req.body;
-  console.log("Here is object", matchObj);
-  matchObj.id = generateId(matches);
-  matches.push(matchObj);
+  console.log("Request body:", req.body);
+  let matchObj = new Match(req.body);
+  matchObj.save();
   res.json({ msg: "Match added successfully" });
 });
-
-function generateId(tab) {
-  let maxId;
-  if (tab.length == 0) {
-    return 1;
-  } else {
-    maxId = tab[0].id;
-    for (let i = 1; i < tab.length; i++) {
-      if (tab[i].id > maxId) {
-        maxId = tab[i].id;
-      }
+// Business Logic: Add Player
+app.post("/players", (req, res) => {
+  // req.body = {name:..., age:..., position: .., teamId: "..."}
+  console.log("Business Logic: Add Player", req.body);
+  Team.findById(req.body.teamId).then(
+    (foundTeam) => {
+      console.log("here is found team", foundTeam)
+      // model attribute : FE value
+      let playerObj = new Player({
+        name: req.body.name,
+        age: req.body.age,
+        nbr: req.body.number,
+        position: req.body.position,
+        // tId objectId
+        // tId: Object(req.body.teamId)
+        teamId: foundTeam._id
+      })
+      playerObj.save(
+        (error, success) => {
+          console.log("Here is success", success)
+          console.log("Here is error", error)
+          if (error) {
+            res.json({ msg: "Player Not saved" })
+          } else {
+            // Affecter palyerId into team (playerId)
+            foundTeam.playerId.push(success._id)
+            foundTeam.save();
+            res.json({ msg: "Player saved with success" })
+          }
+        }
+      );
     }
-    return maxId + 1;
-  }
-}
+  )
+})
+// Business Logic: Add Team 
+app.post("/teams", (req, res) => {
+  console.log("Business Logic: Add Team", req.body);
+  Stadium.findById(req.body.stadiumId).then(
+    (foundStadium) => {
+      console.log("here is found Stadium", foundStadium)
+      // let teamObj = new Team({
+      //   name: req.body.name,
+      //   owner: req.body.owner,
+      //   foundation: req.body.foundation,
+      //   stadiumId: foundStadium._id
+      // })
+      let teamObj = new Team({
+        ...req.body,            
+        stadiumId: foundStadium._id 
+      });
+      teamObj.save(
+        (error, success) => {
+          console.log("Here is success", success)
+          console.log("Here is error", error)
+          if (error) {
+            res.json({ msg: "Team Not saved" })
+
+          } else {
+            foundStadium.teamId.push(success._id)
+            foundStadium.save();
+            res.json({ msg: "Team saved with success" })
+          }
+        }
+      )
+    }
+  )
+
+})
+// Business Logic: Add Stadium 
+app.post("/stadium", (req, res) => {
+  console.log("Business Logic: Add Stadium")
+  console.log("Request body:", req.body);
+  let stadiumObj = new Stadium(req.body);
+  stadiumObj.save();
+  res.json({ msg: "Stadium added successfully" })
+})
 // Business Logic: Edit Match
 app.put("/matches", (req, res) => {
-  console.log("Business Logic: Edit Match ");
+  console.log("Business Logic: Edit Match", req.body);
   let newMatch = req.body;
-  for (let i = 0; i < matches.length; i++) {
-    if (matches[i].id == newMatch.id) {
-      matches[i] = newMatch;
-      break;
-    }
-  }
-  res.json({ msg: "Edited with succes!" });
+  Match.updateOne({ _id: newMatch._id }, newMatch).then(
+    (updateRes) => {
+      if (updateRes.modifiedCount == 1) {
+        res.json({ msg: "Edited with success!" });
+      } else {
+        res.json({ msg: "Not Edited!" });
+      }
+    });
+});
+// Business Logic: Edit Team
+app.put("/teams", (req, res) => {
+  console.log("Business Logic: Edit Team", req.body);
+  let newTeam = req.body;
+  Team.updateOne({ _id: newTeam._id }, newTeam).then(
+    (updateRes) => {
+      if (updateRes.modifiedCount == 1) {
+        res.json({ msg: "Edited with success!" });
+      } else {
+        res.json({ msg: "Not Edited!" });
+      }
+    });
+});
+// Business Logic: Edit Player
+app.put("/players", (req, res) => {
+  console.log("Business Logic: Edit Player", req.body);
+  let newPlayer = req.body;
+  Player.updateOne({ _id: newPlayer._id }, newPlayer).then(
+    (updateRes) => {
+      if (updateRes.modifiedCount == 1) {
+        res.json({ msg: "Edited with success!" });
+      } else {
+        res.json({ msg: "Not Edited!" });
+      }
+    });
+});
+// Business Logic: Edit Stadium
+app.put("/stadium", (req, res) => {
+  console.log("Business Logic: Edit Stadium", req.body);
+  let newStadium = req.body;
+  Stadium.updateOne({ _id: newStadium._id }, newStadium).then(
+    (updateRes) => {
+      if (updateRes.modifiedCount == 1) {
+        res.json({ msg: "Edited with success!" });
+      } else {
+        res.json({ msg: "Not Edited!" });
+      }
+    });
 });
 //business logic: search matches by team
 app.post("/matches/searchMatch", (req, res) => {
@@ -226,7 +351,7 @@ app.get("/matches/searchMatches/:name", (req, res) => {
     }
   }
   if (results.length > 0) {
-    res.json({ tab: results });
+    res.json({ matches: results });
   } else {
     res.json({ msg: "No matches found" });
   }
@@ -263,7 +388,6 @@ app.get("/players/searchPlayerByName/:name", (req, res) => {
   } else {
     res.json({ msg: "player not found" })
   }
-
 })
 function searchPlayerById() {
   let player;
@@ -300,35 +424,55 @@ app.get("/teams/searchByName/:name", (req, res) => {
 app.post("/users/signup", (req, res) => {
   console.log("Busines Logic: Signup Add User", req.body)
   let user = req.body;
-  let isFound = false;
-  for (let i = 0; i < users.length; i++) {
-    if (user.email == users[i].email) {
-      isFound = true;
-      break;
+  // search user by email to check email uniqueness
+  User.findOne({ email: user.email }).then(
+    // data : null or user object | data == search result
+    (data) => {
+      console.log("Here is data after search user by email", data);
+      if (data) {
+        res.json({ msg: "Email already exists", isAdded: false })
+      } else {
+        bcrypt.hash(req.body.password, 10).then(
+          (cryptedPassword) => {
+            console.log("Here is crypted password", cryptedPassword);
+            req.body.password = cryptedPassword;
+            let userObj = new User(req.body);
+            userObj.save();
+            res.json({ msg: "user added successfully!", isAdded: true })
+          }
+        )
+      }
     }
-  }
-  if (isFound) {
-    res.json({ msg: "Email already exists!" });
-  } else {
-    users.push(user);
-    res.json({ msg: "User added succesfully!" });
-  }
-
+  )
 });
-
+// Business Logic : Login
+// 0 => invalid email 
+// 1 => invalid pwd
+// 2 => Welcome
 app.post("/users/login", (req, res) => {
   console.log("Business Logic: Login", req.body);
-  let newUser = req.body;
-  let foundUser = users.find(user => user.email == newUser.email && user.password == newUser.password);
-  if (foundUser) {
-    return res.json({ msg: "Welcome" });
-  }
-  return res.json({ msg: "Email or password is not correct" });
-
+  // Check if user exists by email
+  User.findOne({ email: req.body.email }).then(
+    // data: DB response (null or object)
+    (data) => {
+      console.log("Here is found user by email", data);
+      if (!data) {
+        res.json({ msg: "0" })
+      } else {
+        //Check PWDS
+        bcrypt.compare(req.body.password, data.password).then(
+          (passwordResult) => {
+            console.log('Here is password result', passwordResult);
+            if (!passwordResult) {
+              res.json({ msg: "1" });
+            } else {
+              res.json({ msg: "2", data: data.role });
+            }
+          });
+      }
+    }
+  )
 });
-
-
-
 // export app
 // make app imprtable to other filles
 module.exports = app;

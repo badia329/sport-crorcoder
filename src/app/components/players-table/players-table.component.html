@@ -3,20 +3,22 @@
     <tr>
       <th scope="col">id</th>
       <th scope="col">name</th>
-      <th scope="col">postion</th>
+      <th scope="col">position</th>
       <th scope="col">number</th>
+      <th scope="col">Team Info</th>
       <th scope="col">Acitons</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let player of playersTab">
-      <th scope="row">{{ player.id }}</th>
+      <th scope="row">{{ player._id }}</th>
       <td>{{ player.name }}</td>
       <td>{{ player.position }}</td>
       <td>{{ player.number }}</td>
+      <td>{{player.teamId.name}} || {{player.teamId.foundation}} :: {{player.teamId.owner}}</td>
       <td>
-        <button class="btn btn-warning mr-2" (click)="goToEdit(player.id)">Edit</button>
-        <button class="btn btn-danger mr-2" (click)="deletePlayer(player.id)">
+        <button class="btn btn-warning mr-2" (click)="goToEdit(player._id)">Edit</button>
+        <button class="btn btn-danger mr-2" (click)="deletePlayer(player._id)">
           Delete
         </button>
       </td>

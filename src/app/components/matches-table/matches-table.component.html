@@ -12,7 +12,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let match of matchesTab">
-      <th scope="row">{{ match.id }}</th>
+      <th scope="row">{{ match._id }}</th>
       <td>{{ match.scoreOne }}</td>
       <td>{{ match.scoreTwo }}</td>
       <td [ngStyle]="{ color: scoreColor(match.scoreOne, match.scoreTwo) }">
@@ -23,13 +23,13 @@
       </td>
       <td>{{message(match)}}</td>
       <td>
-        <button class="btn btn-info mr-2" (click)="goToInfo(match.id)">
+        <button class="btn btn-info mr-2m " (click)="goToInfo(match._id)">
           Info
         </button>
-        <button class="btn btn-warning mr-2" (click)="goToEdit(match.id)">
+        <button class="btn btn-warning mr-2" (click)="goToEdit(match._id)">
           Edit
         </button>
-        <button class="btn btn-danger mr-2" (click)="deleteMatch(match.id)">
+        <button class="btn btn-danger mr-2" (click)="deleteMatch(match._id)">
           Delete
         </button>
       </td>

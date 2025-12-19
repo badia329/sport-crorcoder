@@ -4,7 +4,7 @@
       <div class="col-lg-9 mx-auto text-center">
         <h1 class="text-white">{{ title | uppercase }}</h1>
         <h1 class="text-white">
-          {{ actualDate$ | async | date : 'MMMM d, y, h:mm:ss a' }}
+          {{ actualDate$ | async | date : "MMMM d, y, h:mm:ss a" }}
         </h1>
       </div>
     </div>
@@ -49,6 +49,16 @@
         >Players</a
       >
     </li>
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        id="stadium-tab"
+        data-toggle="tab"
+        href="#stadium"
+        role="tab"
+        >Stadium</a
+      >
+    </li>
   </ul>
   <div class="tab-content" id="myTabContent">
     <div
@@ -74,6 +84,9 @@
       aria-labelledby="contact-tab"
     >
       <app-players-table></app-players-table>
+    </div>
+    <div class="tab-pane fade" id="stadium">
+      <app-stadium-table></app-stadium-table>
     </div>
   </div>
 </div>

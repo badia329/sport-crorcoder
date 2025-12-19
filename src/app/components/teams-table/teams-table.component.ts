@@ -1,24 +1,35 @@
-import { NgFor } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { PlayerService } from '../../services/player.service';
+import { TeamService } from '../../services/team.service';
 
 @Component({
   selector: 'app-teams-table',
-  imports: [NgFor],
+  imports: [CommonModule],
   templateUrl: './teams-table.component.html',
   styleUrls: ['./teams-table.component.css'],
 })
 export class TeamsTableComponent {
   teamsTab: any = [];
-  constructor(private router: Router, private playerService: PlayerService) {}
+  constructor(private router: Router, private teamService: TeamService
+  ) {}
   ngOnInit() {
-    this.playerService.getAllPlayers().subscribe();
+    this.teamService.getAllteams().subscribe((data) => {
+      console.log('Here is data from BE', data);
+      this.teamsTab = data.tab;
+    });
   }
-  goToEdit(teamId: any) {
+  goToEdit(teamId: string) {
     this.router.navigate(['editTeam/' + teamId]);
   }
-  deletePlayer(teamId: any) {
-    this.playerService.deletePlayer(teamId).subscribe()
+  deleteTeam(teamId: string) {
+    this.teamService.deleteTeam(teamId).subscribe((response) => {
+      console.log('Here is response after match delete', response);
+      if (response.isDeleted) {
+        this.teamService.getAllteams().subscribe((data) => {
+          this.teamsTab = data.tab;
+        });
+      }
+    });
   }
 }

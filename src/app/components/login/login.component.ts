@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -16,8 +17,14 @@ import { CommonModule } from '@angular/common';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
+  user: any = {};
+  errorMsg: string = '';
   loginForm!: FormGroup;
-  constructor(private formBuilder: FormBuilder, private route: Router) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private userServcie: UserService
+  ) {}
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email, Validators.email]],
@@ -25,23 +32,20 @@ export class LoginComponent {
     });
   }
   login() {
-    let user: any = null;
-    const email = this.loginForm.value.email;
-    const password = this.loginForm.value.password;
-    const usersTab = JSON.parse(localStorage.getItem('users') || '[]');
-
-    for (let i = 0; i < usersTab.length; i++) {
-      if (usersTab[i].email == email && usersTab[i].password == password) {
-        user = usersTab[i]
-        localStorage.setItem('user', JSON.stringify(user));
-      }
-    }
-
-    if (user) {
-      alert('Login succeeded');
-      this.route.navigate(['']); 
-    } else {
-      alert('Email or password is incorrect');
+    if (this.loginForm.valid) {
+      console.log('Form Values:', this.loginForm.value);
+      this.userServcie.login(this.loginForm.value).subscribe((data) => {
+        console.log('Here is response from BE', data);
+        if (data.msg != '2') {
+          (this.errorMsg = 'Invalid Email/Password'), data;
+        } else {
+          if (data.role == 'client') {
+            this.router.navigate(['']);
+          } else {
+            this.router.navigate(['admin']);
+          }
+        }
+      });
     }
   }
 }

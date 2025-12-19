@@ -3,18 +3,20 @@
     <div class="row align-items-center">
       <div class="col-lg-9 mx-auto text-center">
         <h1>Search Match</h1>
-        <input 
-          type="text" 
-          class="form-control" 
-          placeholder="Search by team name..." 
-          [(ngModel)]="searchText"
-          (input)="searchMatch()"
+
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search by team name..."
+          [(ngModel)]="obj.name"
+        
         />
+
         <div class="form-group mt-3">
           <button
             type="button"
             class="btn btn-primary py-3 px-5"
-            (click)="searchMatch()"
+            (click)="search()"
           >
             Search
           </button>
@@ -24,43 +26,31 @@
   </div>
 </div>
 
-<div class="container mt-5">
-  <div class="row">
-    <div class="col-lg-12">
-      <h3 class="mb-4">Search Results: {{ filteredMatches.length }} match(es) found</h3>
-      
-      <div *ngIf="filteredMatches.length === 0" class="alert alert-info">
-        No matches found for "{{ searchText }}"
-      </div>
+<div *ngFor="let match of resultTab" class="mb-4">
+  <div class="d-flex team-vs">
+    <span class="score">{{ match.scoreOne }}-{{ match.scoreTwo }}</span>
 
-      <div *ngFor="let match of filteredMatches" class="mb-4">
-        <div class="d-flex team-vs">
-          <span class="score">{{ match.scoreOne }}-{{ match.scoreTwo }}</span>
-          
-          <div class="team-1 w-50">
-            <div class="team-details w-100 text-center">
-              <img src="images/logo_1.png" alt="Image" class="img-fluid" />
-              <h3>
-                {{ match.teamOne }} 
-                <span *ngIf="match.scoreOne > match.scoreTwo">(win)</span>
-                <span *ngIf="match.scoreOne < match.scoreTwo">(loss)</span>
-                <span *ngIf="match.scoreOne === match.scoreTwo">(draw)</span>
-              </h3>
-            </div>
-          </div>
-          
-          <div class="team-2 w-50">
-            <div class="team-details w-100 text-center">
-              <img src="images/logo_2.png" alt="Image" class="img-fluid" />
-              <h3>
-                {{ match.teamTwo }} 
-                <span *ngIf="match.scoreTwo > match.scoreOne">(win)</span>
-                <span *ngIf="match.scoreTwo < match.scoreOne">(loss)</span>
-                <span *ngIf="match.scoreOne === match.scoreTwo">(draw)</span>
-              </h3>
-            </div>
-          </div>
-        </div>
+    <div class="team-1 w-50">
+      <div class="team-details w-100 text-center">
+        <img src="images/logo_1.png" class="img-fluid" />
+        <h3>
+          {{ match.teamOne }}
+          <span *ngIf="match.scoreOne > match.scoreTwo">(win)</span>
+          <span *ngIf="match.scoreOne < match.scoreTwo">(loss)</span>
+          <span *ngIf="match.scoreOne === match.scoreTwo">(draw)</span>
+        </h3>
+      </div>
+    </div>
+
+    <div class="team-2 w-50">
+      <div class="team-details w-100 text-center">
+        <img src="images/logo_2.png" class="img-fluid" />
+        <h3>
+          {{ match.teamTwo }}
+          <span *ngIf="match.scoreTwo > match.scoreOne">(win)</span>
+          <span *ngIf="match.scoreTwo < match.scoreOne">(loss)</span>
+          <span *ngIf="match.scoreOne === match.scoreTwo">(draw)</span>
+        </h3>
       </div>
     </div>
   </div>
