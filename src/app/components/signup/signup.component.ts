@@ -21,7 +21,7 @@ export class SignupComponent {
   obj: any = {};
   signupForm!: FormGroup;
   errorMsg: string = '';
-
+  photo: any;
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
@@ -52,7 +52,7 @@ export class SignupComponent {
     } else {
       this.signupForm.value.role = 'admin';
     }
-    this.userService.signup(this.signupForm.value).subscribe((data) => {
+    this.userService.signup(this.signupForm.value, this.photo).subscribe((data) => {
       console.log('Here is response agter signup', data);
       if (data.isAdded) {
         this.router.navigate(['signin']);
@@ -60,5 +60,12 @@ export class SignupComponent {
         this.errorMsg = 'Email Already Exists';
       }
     });
+  }
+  onImageSelected(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    if (inputElement && inputElement.files && inputElement.files.length > 0) {
+      this.photo = inputElement.files[0];
+      console.log('File type:', this.photo.constructor.name)
+    }
   }
 }

@@ -89,7 +89,7 @@
                 >email is invalid</small
               >
             </div>
-            <span class="text-danger">{{errorMsg}}</span>
+            <span class="text-danger">{{ errorMsg }}</span>
           </div>
           <!--Password-->
           <div class="form-group">
@@ -177,6 +177,16 @@
                 >phone must be 8 numbers</small
               >
             </div>
+          </div>
+          <!--Image-->
+          <div class="form-group" style="visibility: hidden">
+            <input type="file" class="form-control" #filePicker (change)="onImageSelected($event)" />
+          </div>
+          <!--button-->
+          <div class="text-center">
+            <button class="btn btn-success mb-2" type="button" (click)="filePicker.click()">
+              Select your photo
+            </button>
           </div>
 
           <div class="form-group">

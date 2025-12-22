@@ -2,6 +2,8 @@
 const express = require("express");
 const cors = require("cors");
 const bcrypt = require('bcrypt');
+const multer = require('multer');
+const path = require('path')
 // sportDB: DB name
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://127.0.0.1:27017/sportDB');
@@ -14,6 +16,16 @@ app.use(cors());
 app.use(express.json());
 //Get Object from Req
 app.use(express.urlencoded({ extended: true }));
+
+app.use('/myShortCut', express.static(path.join('backend/uploads')))
+const storageConfig = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "backend/uploads");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
 // import models 
 const Match = require("./models/match");
 const User = require("./models/user")
@@ -243,8 +255,8 @@ app.post("/teams", (req, res) => {
       //   stadiumId: foundStadium._id
       // })
       let teamObj = new Team({
-        ...req.body,            
-        stadiumId: foundStadium._id 
+        ...req.body,
+        stadiumId: foundStadium._id
       });
       teamObj.save(
         (error, success) => {
@@ -420,8 +432,7 @@ app.get("/teams/searchByName/:name", (req, res) => {
     res.json({ msg: "Team not found!" })
   }
 })
-
-app.post("/users/signup", (req, res) => {
+app.post("/users/signup", multer({storage: storageConfig}).single('photo'), (req, res) => {
   console.log("Busines Logic: Signup Add User", req.body)
   let user = req.body;
   // search user by email to check email uniqueness
@@ -436,6 +447,7 @@ app.post("/users/signup", (req, res) => {
           (cryptedPassword) => {
             console.log("Here is crypted password", cryptedPassword);
             req.body.password = cryptedPassword;
+            req.body.photo = "http://localhost:3000/myShortCut/" + req.file.filename;
             let userObj = new User(req.body);
             userObj.save();
             res.json({ msg: "user added successfully!", isAdded: true })
