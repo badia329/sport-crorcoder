@@ -59,6 +59,16 @@
         >Stadium</a
       >
     </li>
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        id="users-tab"
+        data-toggle="tab"
+        href="#users"
+        role="tab"
+        >users</a
+      >
+    </li>
   </ul>
   <div class="tab-content" id="myTabContent">
     <div
@@ -85,8 +95,21 @@
     >
       <app-players-table></app-players-table>
     </div>
-    <div class="tab-pane fade" id="stadium">
+    <div
+      class="tab-pane fade"
+      id="stadium"
+      role="tabpanel"
+      aria-labelledby="stadium-tab"
+    >
       <app-stadium-table></app-stadium-table>
+    </div>
+    <div
+      class="tab-pane fade"
+      id="users"
+      role="tabpanel"
+      aria-labelledby="users-tab"
+    >
+      <app-users-table></app-users-table>
     </div>
   </div>
 </div>

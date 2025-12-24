@@ -24,11 +24,12 @@
             class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block"
           >
             <li class="active"><a routerLink="" class="nav-link">Home</a></li>
+            <li><a routerLink="weather" class="nav-link">Weather</a></li>
             <li><a routerLink="Stadiums" class="nav-link">Stadiums</a></li>
             <li><a routerLink="matches" class="nav-link">Matches</a></li>
             <!-- <li><a class="nav-link">Teams</a></li>
             <li><a class="nav-link">Players</a></li> -->
-            <li>
+            <li *ngIf="isLoggedIn() && user.role == 'admin'">
               <div class="dropdown">
                 <button
                   class="btn btn-secondary dropdown-toggle"
@@ -48,16 +49,28 @@
                     >Add Stadium</a
                   >
                   <a class="dropdown-item" routerLink="admin">Admin</a>
-                  <li><a routerLink="profile" class="nav-link">profile</a></li>
                 </div>
               </div>
             </li>
-            <li><a routerLink="signin" class="nav-link">login</a></li>
-            <li><a routerLink="signup" class="nav-link">signup</a></li>
+            <li *ngIf="!isLoggedIn()">
+              <a routerLink="signin" class="nav-link">login</a>
+            </li>
+            <li *ngIf="!isLoggedIn()">
+              <a routerLink="signup" class="nav-link">signup</a>
+            </li>
+            <li *ngIf="isLoggedIn()">
+              <a routerLink="signup" class="nav-link">
+                <img [src]="user.photo" alt="" width="50px" height="50px" />
+                {{ user.fName }} {{ user.lName }}
+              </a>
+            </li>
+            <li *ngIf="isLoggedIn()">
+
+              <button type="button" class="btn btn-danger" (click)="logOut()">Logout</button>
+            </li>
             <li><a routerLink="search" class="nav-link">Search</a></li>
           </ul>
         </nav>
-
         <a
           href="#"
           class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right text-white"

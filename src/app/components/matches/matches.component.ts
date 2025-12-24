@@ -19,4 +19,7 @@ export class MatchesComponent {
       this.matches = data.tab;
     });
   }
+  updateMatches(T: any) {
+    this.matches = T;
+  }
 }

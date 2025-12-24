@@ -5,6 +5,7 @@ import { MatchesTableComponent } from '../matches-table/matches-table.component'
 import { PlayersTableComponent } from '../players-table/players-table.component';
 import { CommonModule, UpperCasePipe } from '@angular/common';
 import { StadiumTableComponent } from "../stadium-table/stadium-table.component";
+import { UsersTableComponent } from "../users-table/users-table.component";
 
 @Component({
   selector: 'app-admin',
@@ -15,7 +16,8 @@ import { StadiumTableComponent } from "../stadium-table/stadium-table.component"
     PlayersTableComponent,
     UpperCasePipe,
     CommonModule,
-    StadiumTableComponent
+    StadiumTableComponent,
+    UsersTableComponent
 ],
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css'],

@@ -16,6 +16,7 @@ import { StadiumComponent } from './components/stadium/stadium.component';
 import { AddStadiumComponent } from './components/add-stadium/add-stadium.component';
 import { StadiumEditComponent } from './components/stadium-edit/stadium-edit.component';
 import { ProfileInfoComponent } from './components/profile-info/profile-info.component';
+import { WeatherComponent } from './components/weather/weather.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -36,5 +37,6 @@ export const routes: Routes = [
   { path: 'editPlayer/:id', component: PlayerEditComponent },
   { path: 'editStadium/:id', component: StadiumEditComponent },
   { path: 'search', component: SearchMatchComponent },
-  { path: 'profile', component: ProfileInfoComponent },
+  { path: 'profile/:id', component: ProfileInfoComponent },
+  { path: 'weather', component: WeatherComponent },
 ];
